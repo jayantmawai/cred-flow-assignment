@@ -1,0 +1,49 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <form class="login-form">
+            <div class="form-control">
+                <label for="subject">Subject</label>
+                <input type="text" name="subject" id="subject">
+            </div>
+            <div class="form-control">
+                <label for="body">Body</label>
+                <input type="text" name="body" id="body">
+            </div>
+            <button class="btn" id="sendEmail" type="button">Send Email</button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>
+
+
+
+<script type="text/javascript">
+    $("#sendEmail").click(function(){
+        $.ajax({
+           url : 'http://localhost:3000/api/admin/sendemail/<%= customerId %>',
+           type : 'POST',
+           data : {      
+                    subject: $('#subject').val(),              
+                    text: $('#body').val()                     
+                },
+           dataType : 'JSON',
+           headers: {                     
+                        "Authorization": "Bearer " + getToken()                  
+                    },
+           success : function(data, status,xhr){
+              if (xhr.status===200) {
+                alert('Mail sent successfully!!');
+                window.location.replace('/api/admin/customers');
+              }
+
+           },
+        });
+
+    });
+</script>

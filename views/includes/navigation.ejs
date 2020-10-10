@@ -1,0 +1,72 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a>CRED FLOW</a>
+            </li>
+            <li class="main-header__item logout">
+                <a class="<%= path === '/api/home' ? 'active' : '' %>" href="/api/home">Home</a>
+            </li>
+            <li class="main-header__item logout">
+                <a class="<%= path === '/api/admin/add-customer' ? 'active' : '' %>" href="/api/admin/add-customer">Add Customer
+                </a>
+            </li>
+            <li class="main-header__item logout">
+                <a class="<%= path === '/api/admin/customers' ? 'active' : '' %>" href="/api/admin/customers">Admin Customers
+                </a>
+            </li>
+        </ul>
+        <ul class="main-header__item-list">
+                <li class="main-header__item login" style="display: list-item;">
+                    <a class="<%= path === '/api/login' ? 'active' : '' %>" href="/api/login">Login</a>
+                </li>
+                <li class="main-header__item login" style="display: list-item;">
+                    <a class="<%= path === '/api/signup' ? 'active' : '' %>" href="/api/signup">Signup</a>
+                </li>
+                <li class="main-header__item logout" style="display: none;">
+                    <button type="button" onclick="unAuthenticate();">Logout</button>
+                </li>
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+        <ul class="mobile-nav__item-list">
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/' ? 'active' : '' %>" href="/home">Home</a>
+                </li>
+                <li class="mobile-nav__item logout">
+                    <a class="<%= path === '/admin/add-customer' ? 'active' : '' %>" href="/api/admin/add-product">Add Customer
+                    </a>
+                </li>
+                <li class="mobile-nav__item logout">
+                    <a class="<%= path === '/admin/customers' ? 'active' : '' %>" href="/api/admin/customers">Admin Customers
+                    </a>
+                </li>
+                
+                <li class="mobile-nav__item login" style="display: list-item;" >
+                    <a class="<%= path === '/login' ? 'active' : '' %>" href="/api/login">Login</a>
+                </li>
+                <li class="mobile-nav__item login" style="display: list-item;">
+                    <a class="<%= path === '/signup' ? 'active' : '' %>" href="/api/signup">Signup</a>
+                </li>
+                <li class="mobile-nav__item logout" style="display: none;">
+                    <button type="button" onclick="unAuthenticate();">Logout</button>
+                </li>
+            </ul>
+</nav>
+
+
+<script type="text/javascript">     
+ user = checkAuthenticate();
+ if (user) {
+    $('.login').css('display','none');
+    $('.logout').css('display','list-item');
+ }
+ else{
+    $('.logout').css('display','none');
+    $('.login').css('display','list-item');
+ }
+</script>

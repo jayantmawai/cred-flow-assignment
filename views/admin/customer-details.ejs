@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                    <div class="grid">
+                            <article class="card product-item">
+                                <header class="card__header">
+                                    <h1 class="product__title">
+                                        <%= prods.name %>
+                                    </h1>
+                                </header>
+                                <div class="card__content">
+                                    <% if (emails.length > 0) { %>
+                                        <table>
+                                           <tr>
+                                              <th>Email Subject</th><th>Email Content</th><th>Time</th>
+                                           </tr>
+                                            <% for (let email of emails) { %>
+                                               <tr>
+                                                 <td>
+                                                   <%= email.email_subject%>
+                                                 </td>
+                                                 <td>
+                                                   <%= email.email_content%>
+                                                 </td>
+                                                 <td>
+                                                   <%= email.createdAt%>
+                                                 </td>
+                                               </tr>
+                                            <% } %>
+                                        </table>
+                                    <% } else { %>
+                                        <h1>No Email Found!</h1>
+                                    <% } %>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="/api/send-email/<%= prods.id %>" class="btn">Send Email</a>
+                                </div>
+                            </article>
+                            
+                    </div>
+            </main>
+            <%- include('../includes/end.ejs') %>

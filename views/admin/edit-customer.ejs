@@ -1,0 +1,72 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <form class="product-form">
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" value="<% if (editing) { %><%= customer.name %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" value="<% if (editing) { %><%= customer.email %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="phone">Phone Number</label>
+                <input type="tel" name="phone" id="phone" value="<% if (editing) { %><%= customer.phone %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="address">Address</label>
+                <textarea name="address" id="address" rows="3"><% if (editing) { %><%= customer.address %><% } %></textarea>
+            </div>
+            <div class="form-control">
+                <label for="gst_number">GST Number</label>
+                <input type="text" name="gst_number" id="gst_number" value="<% if (editing) { %><%= customer.gst_number %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="frequency">Frequency of Automated Reminder</label>
+                <input type="number" name="frequency" id="frequency" step="1" value="<% if (editing) { %><%= customer.frequency %><% } %>">
+            </div>
+            <% if (editing) { %>
+                <input type="hidden" id="customerId" value="<%= customer.id %>" name="customerId">
+            <% } %>
+
+            <button class="btn" id="submitButton" type="button"><% if (editing) { %>Update Customer<% } else { %>Add Croduct<% } %></button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>
+
+<script type="text/javascript">
+    $("#submitButton").click(function(){
+
+        $.ajax({
+           url : 'http://localhost:3000/api/admin/<% if (editing) { %>edit-customer<% } else { %>add-customer<% } %>',
+           type : 'POST',
+           data : {      
+                    customerId: $('#customerId').val(),              
+                    name: $('#name').val(),                   
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    address: $('#address').val(),
+                    gst_number: $('#gst_number').val(),
+                    frequency: $('#frequency').val(),                     
+                },
+           dataType : 'JSON',
+           headers: {                     
+                        "Authorization": "Bearer " + getToken()                  
+                    },
+           success : function(data, status,xhr){
+              if (xhr.status===200) {
+                alert('Customer updated successfully!!');
+                window.location.replace('/api/admin/customers');
+              }
+           },
+        });
+
+    });
+</script>
